@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: hot_100_flat
+    description: "The billboard hot 100 table with one artist per row (thereby flattening artist pairs)."
+    columns:
+      - name: chart_position
+        description: "The chart position of the song on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: song
+        description: "The name of the song."
+        tests:
+          - not_null
+      - name: artist
+        description: "The name of the artist."
+        tests:
+          - not_null
+      - name: last_week
+        description: "The last week's position of the song on the Billboard Hot 100."
+      - name: peak_position
+        description: "The peak position of the song on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: weeks_on_chart
+        description: "The number of weeks the song has been on the Billboard Hot 100."
+        tests:
+          - not_null

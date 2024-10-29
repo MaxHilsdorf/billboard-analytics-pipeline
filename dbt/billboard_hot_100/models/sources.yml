@@ -1,0 +1,11 @@
+# models/sources.yml
+
+version: 2
+
+sources:
+  - name: bb_snowflake_source  # The name of the source you reference in your model
+    database: BB_DATABASE
+    schema: BB_SCHEMA
+    tables:
+      - name: billboard_hot_100
+      - name: artist_data

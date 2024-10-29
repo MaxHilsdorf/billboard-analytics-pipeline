@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: hot_100_artists
+    description: "A table breaking down the billboard hot 100 by artist."
+    columns:
+      - name: artist
+        description: "Unique identifier for each artist."
+        tests:
+          - not_null
+          - unique
+      - name: top_rank
+        description: "Top rank of the artist on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: total_entries
+        description: "Total number of songs from that artist on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: top10_entries
+        description: "Number of songs from that artist that made the top 10."
+        tests:
+          - not_null
+      - name: country
+        description: "Country of the artist."
+      - name: genre
+        description: "Genre of the artist."
+
+  - name: countries
+    description: "A table breaking down the billboard hot 100 by country."
+    columns:
+      - name: country
+        description: "Unique identifier for each country."
+        tests:
+          - not_null
+          - unique
+      - name: total_entries
+        description: "Total number of songs from that country on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: total_artists
+        description: "Total number of artists from that country on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: top_10_entries
+        description: "Number of songs from that country that made the top 10."
+        tests:
+          - not_null
+      - name: top_rank
+        description: "Top rank of the country on the Billboard Hot 100."
+        tests:
+          - not_null
+      - name: top_artist
+        description: "Top artist of the country on the Billboard Hot 100."
+        tests:
+          - not_null
+          - unique
+      - name: top_genre
+        description: "Top genre of the country on the Billboard Hot 100."
+        tests:
+          - not_null
