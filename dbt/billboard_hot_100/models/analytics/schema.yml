@@ -21,6 +21,14 @@ models:
         description: "Number of songs from that artist that made the top 10."
         tests:
           - not_null
+      - name: num_collabs
+        description: "Number of charting tracks together with other artists."
+        tests:
+          - not_null
+      - name: num_primary_artist
+        description: "Number of chart positions as primary artist."
+        tests:
+          - not_null
       - name: country
         description: "Country of the artist."
       - name: genre
@@ -40,10 +48,6 @@ models:
           - not_null
       - name: total_artists
         description: "Total number of artists from that country on the Billboard Hot 100."
-        tests:
-          - not_null
-      - name: top_10_entries
-        description: "Number of songs from that country that made the top 10."
         tests:
           - not_null
       - name: top_rank

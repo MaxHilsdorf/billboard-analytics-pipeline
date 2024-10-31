@@ -26,3 +26,7 @@ models:
         description: "The number of weeks the song has been on the Billboard Hot 100."
         tests:
           - not_null
+      - name: is_primary_artist
+        description: "Whether or not the artist is the primary artist on the track."
+        tests:
+          - not_null

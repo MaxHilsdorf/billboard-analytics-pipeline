@@ -4,13 +4,14 @@ WITH
     split_artists AS (
         SELECT
             b.*,
-            SPLIT(REGEXP_REPLACE(ARTIST, ' & | Feat\\.', '|'), '|') AS artist_parts
+            SPLIT(REGEXP_REPLACE(artist, ' & | Feat\\.', '|'), '|') AS artist_parts
         FROM {{ source('bb_snowflake_source', 'billboard_hot_100') }} b
     ),
     exploded_artists AS (
         SELECT
             b.*,
-            TRIM(a.value::STRING) AS split_artist
+            TRIM(a.value::STRING) AS split_artist,
+            ROW_NUMBER() OVER (PARTITION BY b.chart_position ORDER BY a.index) AS artist_position
         FROM split_artists b,
         LATERAL FLATTEN(input => b.artist_parts) a
     ),
@@ -19,8 +20,12 @@ WITH
             ea.*,
             CASE 
                 WHEN va.artist_name IS NOT NULL THEN ea.split_artist
-                ELSE ea.artist  -- Keep original artist if validation fails
-            END AS final_artist
+                ELSE ea.artist
+            END AS final_artist,
+            CASE 
+                WHEN ea.artist_position = 1 THEN TRUE
+                ELSE FALSE
+            END AS is_primary_artist
         FROM exploded_artists ea
         LEFT JOIN {{ source('bb_snowflake_source', 'artist_data') }} va 
             ON LOWER(ea.split_artist) = LOWER(va.artist_name)
@@ -31,6 +36,7 @@ SELECT
     final_artist AS artist,
     last_week,
     peak_position,
-    weeks_on_chart
+    weeks_on_chart,
+    is_primary_artist
 FROM validated_artists
 ORDER BY chart_position ASC, artist ASC
