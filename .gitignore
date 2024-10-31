@@ -2,3 +2,5 @@ logs/*
 dbt/billboard_hot_100/logs/*
 templogs.txt
 profiles.yml
+*.pyc
+*.csv
