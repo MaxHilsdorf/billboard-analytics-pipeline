@@ -1,18 +1,26 @@
 # Billboard Hot 100 Analytics Pipeline
 
-## About the Project: End-to-End Data Pipeline for Music Chart Analysis 
+## Project: End-to-End Data Pipeline for Music Chart Analysis 
 ### Goal
 Implement a production-ready data pipeline transforming raw data into clear insights.
-### Implementation
-<img src="resources/pipeline_placeholder.webp" alt="PLACEHOLDER: Billboard Hot 100 Data Pipeline" width="400">
-
-*Note: This repository contains the source code for performing data transformations with data ingested into Snowflake. For guidance on how to implement the first and last step, feel free to reach out (see contact info below)!*
-
 ### Outcomes
 * **Business insights:** Extracted from raw data across multiple sources, providing actionable information.
 * **Automated updates:** Scheduled transformations ensure insights remain current and reliable.
 * **Enterprise scalability:** Robust and scalable pipeline capable of handling large, complex data workloads.
 * **Flexible setup:** Modular structure makes it easy to update or extend the pipeline.
+### Implementation
+<img src="resources/pipeline_graphic.jpg" alt="PLACEHOLDER: Billboard Hot 100 Data Pipeline" width="600">
+
+#### Data Ingestion
+* Scraping data from Billboard Hot 100 charts using AWS Lambda and storing the data in an S3 bucket
+* Loading and syncing S3 data to a Snowflake database
+* The ingestion pipeline runs once every week to account for charts updates
+#### Data Transformation & Analysis
+* Several dbt models transform the raw data in Snowflake into useful insights for analytics
+* (*Not yet implemented*) After data transformation, a dashboard is built to visualize the key insights at a glance
+* The dbt and dashboarding steps are orchestrated by a containerized Airflow implementation
+
+*Note: This repository contains the source code for the "Data Transformation & Analysis" part of the pipeline. For guidance on how to implement the data ingestion, feel free to reach out (see contact info below)!*
 
 ### Technology
 * AWS Lambda & S3 for data scraping and storage
