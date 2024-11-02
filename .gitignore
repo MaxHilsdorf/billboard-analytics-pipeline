@@ -4,3 +4,4 @@ templogs.txt
 profiles.yml
 *.pyc
 *.csv
+dbt/billboard_hot_100/target/*
