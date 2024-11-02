@@ -1,0 +1,17 @@
+# ~/.dbt/profiles.yml
+
+billboard_hot_100:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "my_id.my_region"        # Your Snowflake account, without `.snowflakecomputing.com`
+      user: "USERNAME"                  # Your Snowflake username
+      password: "my_password"           # Your Snowflake password
+      role: "ACCOUNTADMIN"              # The role you want to use in Snowflake (you can leave it as is)
+      database: "DATABASE_NAME"         # The database to run dbt in
+      warehouse: "WAREHOUSE_NAME"       # The warehouse dbt should use
+      schema: "SCHEMA_NAME"             # The schema for models and data
+      threads: 4                        # Adjust thread count as needed
+      client_session_keep_alive: False  # Optional: keeps session alive
+      query_tag: "dbt"                  # Optional: tag queries for tracking

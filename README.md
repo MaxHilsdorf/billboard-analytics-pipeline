@@ -2,14 +2,14 @@
 
 ## Project: End-to-End Data Pipeline for Music Chart Analysis 
 ### Goal
-Implement a production-ready data pipeline transforming raw data into clear insights.
+Implement a production-ready data pipeline transforming raw music charts data into clear insights.
 ### Outcomes
 * **Business insights:** Extracted from raw data across multiple sources, providing actionable information.
 * **Automated updates:** Scheduled transformations ensure insights remain current and reliable.
 * **Enterprise scalability:** Robust and scalable pipeline capable of handling large, complex data workloads.
 * **Flexible setup:** Modular structure makes it easy to update or extend the pipeline.
 ### Implementation
-<img src="resources/pipeline_graphic.jpg" alt="PLACEHOLDER: Billboard Hot 100 Data Pipeline" width="600">
+<img src="resources/pipeline_graphic.jpg" alt="PLACEHOLDER: Billboard Hot 100 Data Pipeline" width="700">
 
 #### Data Ingestion
 * Scraping data from Billboard Hot 100 charts using AWS Lambda and storing the data in an S3 bucket
@@ -32,36 +32,25 @@ Implement a production-ready data pipeline transforming raw data into clear insi
 ## Repository Structure
 * `airflow/`: Contains the DAGs and configuration files for Airflow to schedule and run ETL workflows.
 * `dbt/billboard_hot_100/`: Houses dbt models and transformations for preparing the data for analytics.
+* `resources/`: Includes files used for documentation as well as example datasets.
 * `scripts/`: Contains python scripts used in the airflow DAG.
 * `README.md`: Documentation for the project setup and usage.
 * `docker-compose.yaml`: Docker Compose configuration to set up the development environment.
 
-## Setup Guide (WIP, DO NOT USE YET)
+## Setup Guide
+*Note: This setup guide aims to be complete, but high-level. If you need guidance in implementing a specific step, please reach out (see contact info below)*.
 ### 1. Get the Data
-To collect the Billboard Hot 100 data:
-Run the AWS Lambda function to scrape data and store the results in a CSV file within an S3 bucket.
-Ensure you have the necessary AWS credentials and permissions set up for this process.
-(Optional) If using local data, place your CSV files in a specific directory (e.g., data/raw).
+I adapted the code from [this repository](https://github.com/jsubroto/billboard-hot-100-web-scraper/tree/main) to scrape the billboard data. Additionally, I used ChatGPT to generate additional information on all artists in the current hot 100 charts (country and genre). Since this repo focuses on data transformations, you can find the two data sources as static csv files under `resources/data/`. `billboard_hot_100.csv` contains the Billboard charts as of 31.10.24. `artist_data.csv` contains additional information about most (but not all) artists in the hot 100.
 ### 2. Load Data into Snowflake
-Follow these steps to transfer data to Snowflake:
-Option 1: Use dbt to directly connect to Snowflake and handle the data transformation process.
-Option 2: (Link to a tutorial or describe manual process) for uploading CSV files to Snowflake tables if you prefer to manually manage the data loading.
+* **Option 1**: Manually ingest the data into Snowflake from your local drive as static tables.
+  * "Quick and dirty" solution. Do this if you are purely interested in the data transformation & analysis and do not intend to set up an end-to-end pipeline.
+
+* **Option 2**: Set up an automated scraping mechanism that loads the data into Snowflake and updates it frequently. For example, a combination of AWS Lambda functions and S3 Buckets can achieve this.
+  * Sophisticated solution. Requires cloud skills and additional setup effort, but allows for scheduled updates of data & insights.
+
 ### 3. Configure profiles.yml for Snowflake
-To enable dbt to connect to Snowflake, create a profiles.yml file in your ~/.dbt directory with the following template:
-```yaml
-default:
-  outputs:
-    dev:
-      type: snowflake
-      account: <YOUR_ACCOUNT>
-      user: <YOUR_USERNAME>
-      password: <YOUR_PASSWORD>
-      role: <YOUR_ROLE>
-      database: <YOUR_DATABASE>
-      warehouse: <YOUR_WAREHOUSE>
-      schema: <YOUR_SCHEMA>
-  target: dev
-```
+To enable dbt to connect to Snowflake, create a profiles.yml file and place it under `dbt/profiles.yml` in this repo. Use the template in `dbt/profiles.yml.template` for inspiration. Consider carefully if you want to put in your account details explicitly or use environment variables instead.
+
 ### 4. Run Docker Containers
 Start the Docker environment by running:
 
@@ -77,11 +66,11 @@ This command sets up the necessary containers for dbt and Airflow.
     * Password: admin_password
 * Locate the DAG for this pipeline, activate it, and then trigger a run to start processing the data.
 
-### Next Steps
-After setting up and running the pipeline, you might consider:
-* Building dashboards in tools like Looker or Tableau for visual insights.
-* Developing scheduled reports using Airflow to automate insights.
-* Integrating machine learning models to forecast trends or classify songs based on genre and other attributes.
+### 6. Access Insights
+#### Analyze Snowflake Tables
+
+#### View Dashboard
+The dashboard part of the pipeline is not implemented, yet.
 
 ## Contact Information
 For questions or contributions, reach out to Max Hilsdorf via [Email](mailto:m.hilsdorf1@gmail.com) or on [LinkedIn](https://www.linkedin.com/in/max-hilsdorf/).
