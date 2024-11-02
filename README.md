@@ -1,6 +1,6 @@
 # Billboard Hot 100 Analytics Pipeline
 
-## Project: End-to-End Data Pipeline for Music Chart Analysis 
+## Project: End-to-End Data Pipeline for Music Charts Analysis 
 ### Goal
 Implement a production-ready data pipeline transforming raw music charts data into clear insights.
 ### Outcomes
@@ -68,6 +68,17 @@ This command sets up the necessary containers for dbt and Airflow.
 
 ### 6. Access Insights
 #### Analyze Snowflake Tables
+Analyze the clean data tables using SQL. For example, this command will show you the top 10 songs with additional artist information:
+```SQL
+SELECT *
+FROM hot_100_artists
+LIMIT 10;
+```
+This command shows you the charts data broken down by country:
+```SQL
+SELECT *
+FROM countries;
+```
 
 #### View Dashboard
 The dashboard part of the pipeline is not implemented, yet.
